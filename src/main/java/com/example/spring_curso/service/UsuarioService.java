@@ -20,9 +20,6 @@ public class UsuarioService {
 
     public UsuarioCreateResponse createUsuario(UsuarioCreateDto usuarioCreateDto){
         String dni = usuarioCreateDto.getDni();
-        if(dni.length() !=8){
-            return null;
-        }
         String password = PasswordGenerator.generatePassword(
                 10,true,true,true,true
         );

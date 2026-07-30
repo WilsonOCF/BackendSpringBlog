@@ -3,6 +3,7 @@ package com.example.spring_curso.controller;
 import com.example.spring_curso.dto.input.UsuarioCreateDto;
 import com.example.spring_curso.dto.output.UsuarioCreateResponse;
 import com.example.spring_curso.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<UsuarioCreateResponse> crearUsuario(@RequestBody UsuarioCreateDto usuarioCreateDto){
+    public ResponseEntity<UsuarioCreateResponse> crearUsuario(@Valid @RequestBody UsuarioCreateDto usuarioCreateDto){
         UsuarioCreateResponse userResponse = usuarioService.createUsuario(usuarioCreateDto);
         if (userResponse ==null){
             return ResponseEntity.badRequest().build();
