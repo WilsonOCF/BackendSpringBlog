@@ -1,4 +1,4 @@
-package com.example.spring_curso.utils;
+package com.example.spring_curso.service.utils;
 
 import java.security.SecureRandom;
 
