@@ -20,7 +20,7 @@ public class UsuarioCreateDto {
     private String nombre;
     @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
-    @NotBlank(message = "El apellido es obligatorio")
+    @NotBlank(message = "El dni es obligatorio")
     @Pattern(regexp = "\\d{8}", message = "El DNI debe tener 8 digitos")
     private String dni;
 }

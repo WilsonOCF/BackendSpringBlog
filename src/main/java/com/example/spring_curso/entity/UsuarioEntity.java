@@ -30,4 +30,8 @@ public class UsuarioEntity {
     private String fechaCreacion = new Date(System.currentTimeMillis()).toString();
     @Column(name = "fecha_actualizacion")
     private Date fechaActualizacion;
+    @Column(name = "numero_articulos", columnDefinition = "INTEGER DEFAULT 0")
+    private Integer numeroArticulos =0;
+    @Column(name = "numero_comentarios")
+    private Integer numeroComentarios = 0;
 }
