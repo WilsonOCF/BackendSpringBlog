@@ -7,6 +7,7 @@ import com.example.spring_curso.repository.UsuarioRepository;
 import com.example.spring_curso.service.utils.PasswordGenerator;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,7 +39,8 @@ public class UsuarioService {
                 usuarioEntity.getNombre(),
                 usuarioEntity.getApellido(),
                 usuarioEntity.getDni(),
-                usuarioEntity.isEstado()
+                usuarioEntity.isEstado(),
+                new ArrayList<>()
         );
     }
 
@@ -54,7 +56,8 @@ public class UsuarioService {
                 usuarioEntity.getNombre(),
                 usuarioEntity.getApellido(),
                 usuarioEntity.getDni(),
-                usuarioEntity.isEstado()
+                usuarioEntity.isEstado(),
+                null
         );
     }
 }

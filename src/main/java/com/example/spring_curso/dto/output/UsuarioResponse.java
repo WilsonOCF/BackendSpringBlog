@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Getter
@@ -18,4 +19,5 @@ public class UsuarioResponse {
     private String apellido;
     private String dni;
     private boolean estado;
+    private ArrayList<String> roles;
 }

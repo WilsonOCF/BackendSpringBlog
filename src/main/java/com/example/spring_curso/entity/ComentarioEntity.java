@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "comentario")
+@Table(name = "comentario", schema = "articles")
 public class ComentarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,9 +22,9 @@ public class ComentarioEntity {
     private UUID idComentario;
     private String contenido;
     @Column(name = "fecha_creacion")
-    private String fechaCreacion;
+    private LocalDate fechaCreacion;
     @Column(name = "fecha_actualizacion")
-    private String fechaActualizacion;
+    private LocalDate fechaActualizacion;
 
     @ManyToOne
     @JoinColumn(name = "id_articulo_fk")
