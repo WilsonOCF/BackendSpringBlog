@@ -1,7 +1,7 @@
 package com.example.spring_curso.service;
 
 import com.example.spring_curso.dto.input.UsuarioCreateDto;
-import com.example.spring_curso.dto.output.UsuarioCreateResponse;
+import com.example.spring_curso.dto.output.UsuarioResponse;
 import com.example.spring_curso.entity.UsuarioEntity;
 import com.example.spring_curso.repository.UsuarioRepository;
 import com.example.spring_curso.service.utils.PasswordGenerator;
@@ -18,7 +18,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public UsuarioCreateResponse createUsuario(UsuarioCreateDto usuarioCreateDto){
+    public UsuarioResponse createUsuario(UsuarioCreateDto usuarioCreateDto){
         String dni = usuarioCreateDto.getDni();
         String password = PasswordGenerator.generatePassword(
                 10,true,true,true,true
@@ -32,7 +32,7 @@ public class UsuarioService {
 
         usuarioRepository.save(usuarioEntity);
 
-        return new UsuarioCreateResponse(
+        return new UsuarioResponse(
                 usuarioEntity.getIdUsuario(),
                 usuarioEntity.getUsername(),
                 usuarioEntity.getNombre(),
@@ -42,13 +42,13 @@ public class UsuarioService {
         );
     }
 
-    public UsuarioCreateResponse finUsuarioById(UUID id){
+    public UsuarioResponse finUsuarioById(UUID id){
         Optional<UsuarioEntity> optionalUsuario = usuarioRepository.findById(id);
         if (optionalUsuario.isEmpty()){
             return null;
         }
         UsuarioEntity usuarioEntity = optionalUsuario.get();
-        return new UsuarioCreateResponse(
+        return new UsuarioResponse(
                 usuarioEntity.getIdUsuario(),
                 usuarioEntity.getUsername(),
                 usuarioEntity.getNombre(),

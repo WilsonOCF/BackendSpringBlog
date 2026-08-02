@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -34,4 +36,12 @@ public class UsuarioEntity {
     private Integer numeroArticulos =0;
     @Column(name = "numero_comentarios")
     private Integer numeroComentarios = 0;
+
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_role",
+        joinColumns = @JoinColumn(name = "id_usuario_fk"),
+        inverseJoinColumns = @JoinColumn(name = "id_role_fk")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 }
