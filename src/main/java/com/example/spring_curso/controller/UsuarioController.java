@@ -36,4 +36,16 @@ public class UsuarioController {
         }
         return ResponseEntity.ok(userResponse);
     }
+
+    @PostMapping("/usuario/role")
+    public ResponseEntity<UsuarioResponse> addRoleToUser(
+            @RequestParam String role, @RequestParam UUID usuarioId
+    ){
+        UsuarioResponse usuarioResponse = usuarioService.agregarRoleUsuario(role, usuarioId);
+        if(usuarioResponse == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(usuarioResponse);
+
+    }
 }
