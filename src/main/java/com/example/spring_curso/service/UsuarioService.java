@@ -2,21 +2,28 @@ package com.example.spring_curso.service;
 
 import com.example.spring_curso.dto.input.UsuarioCreateDto;
 import com.example.spring_curso.dto.output.UsuarioResponse;
+import com.example.spring_curso.entity.RoleEntity;
 import com.example.spring_curso.entity.UsuarioEntity;
+import com.example.spring_curso.repository.RoleRepository;
 import com.example.spring_curso.repository.UsuarioRepository;
+import com.example.spring_curso.service.utils.Mapper;
 import com.example.spring_curso.service.utils.PasswordGenerator;
 import org.springframework.stereotype.Service;
 
+import java.rmi.MarshalledObject;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final RoleRepository roleRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.roleRepository = roleRepository;
     }
 
     public UsuarioResponse createUsuario(UsuarioCreateDto usuarioCreateDto){
@@ -24,24 +31,12 @@ public class UsuarioService {
         String password = PasswordGenerator.generatePassword(
                 10,true,true,true,true
         );
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
-        usuarioEntity.setUsername(usuarioCreateDto.getUsername());
+        UsuarioEntity usuarioEntity = Mapper.fromUsuarioCreateDto(usuarioCreateDto);
         usuarioEntity.setPassword(password);
-        usuarioEntity.setNombre(usuarioCreateDto.getNombre());
-        usuarioEntity.setApellido(usuarioCreateDto.getApellido());
-        usuarioEntity.setDni(usuarioCreateDto.getDni());
 
         usuarioRepository.save(usuarioEntity);
 
-        return new UsuarioResponse(
-                usuarioEntity.getIdUsuario(),
-                usuarioEntity.getUsername(),
-                usuarioEntity.getNombre(),
-                usuarioEntity.getApellido(),
-                usuarioEntity.getDni(),
-                usuarioEntity.isEstado(),
-                new ArrayList<>()
-        );
+        return Mapper.fromUsuarioEntity(usuarioEntity);
     }
 
     public UsuarioResponse finUsuarioById(UUID id){
@@ -50,14 +45,19 @@ public class UsuarioService {
             return null;
         }
         UsuarioEntity usuarioEntity = optionalUsuario.get();
-        return new UsuarioResponse(
-                usuarioEntity.getIdUsuario(),
-                usuarioEntity.getUsername(),
-                usuarioEntity.getNombre(),
-                usuarioEntity.getApellido(),
-                usuarioEntity.getDni(),
-                usuarioEntity.isEstado(),
-                null
-        );
+        return Mapper.fromUsuarioEntity(usuarioEntity);
+    }
+
+    public UsuarioResponse agregarRoleUsuario(String role, UUID idUsuario){
+        Optional<RoleEntity> roleOptional = roleRepository.findByNombre(role);
+        Optional<UsuarioEntity> usuarioOptional = usuarioRepository.findById(idUsuario);
+        if(roleOptional.isEmpty() || usuarioOptional.isEmpty()){
+            return null;
+        }
+        UsuarioEntity usuarioEntity = usuarioOptional.get();
+        usuarioEntity.getRoles().add(roleOptional.get());
+
+        usuarioRepository.save(usuarioEntity);
+        return Mapper.fromUsuarioEntity(usuarioEntity);
     }
 }
