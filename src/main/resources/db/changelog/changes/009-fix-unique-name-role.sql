@@ -1,0 +1,1 @@
+alter table users.role add constraint name_role unique(nombre)
