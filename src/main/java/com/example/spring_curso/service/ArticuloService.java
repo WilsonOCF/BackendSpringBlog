@@ -8,6 +8,8 @@ import com.example.spring_curso.entity.UsuarioEntity;
 import com.example.spring_curso.repository.ArticuloRepository;
 import com.example.spring_curso.repository.UsuarioRepository;
 import com.example.spring_curso.service.utils.Mapper;
+import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.query.sqm.EntityTypeException;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.OAEPParameterSpec;
@@ -67,5 +69,19 @@ public class ArticuloService {
         articuloRepository.save(articuloEntity);
 
         return Mapper.fromArticuloEntity(articuloEntity);
+    }
+
+    public void deleteArticulo(UUID idArticulo, boolean isDraft){
+        Optional<ArticuloEntity> optionalArticuloEntity = articuloRepository.findById(idArticulo);
+        if (optionalArticuloEntity.isEmpty()){
+            throw new EntityNotFoundException();
+        }
+        if(isDraft){
+            ArticuloEntity articuloEntity = optionalArticuloEntity.get();
+            articuloEntity.setEstado(false);
+            articuloRepository.save(articuloEntity);
+        }else {
+            articuloRepository.deleteById(idArticulo);
+        }
     }
 }

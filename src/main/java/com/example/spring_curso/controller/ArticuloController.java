@@ -3,6 +3,7 @@ package com.example.spring_curso.controller;
 import com.example.spring_curso.dto.input.ArticuloCreateDto;
 import com.example.spring_curso.dto.input.ArticuloUpdateDto;
 import com.example.spring_curso.dto.output.ArticuloCreateResponse;
+import com.example.spring_curso.entity.ArticuloEntity;
 import com.example.spring_curso.service.ArticuloService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,13 @@ public class ArticuloController {
         }else {
             return ResponseEntity.accepted().body(acr);
         }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteArticulo(
+            @PathVariable UUID idArticulo,
+            @RequestParam boolean idDraft){
+        articuloService.deleteArticulo(idArticulo,idDraft);
+        return ResponseEntity.noContent().build();
     }
 }

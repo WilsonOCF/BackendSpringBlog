@@ -25,6 +25,7 @@ public class ArticuloEntity {
     private String fechaCreacion;
     @Column(name = "fecha_actualizacion")
     private String fechaActualizacion;
+    private boolean estado = true;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario_fk")

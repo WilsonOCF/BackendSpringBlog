@@ -102,6 +102,25 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Eliminar Articulo",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/articulos/delete/{{articuloId}}?idDraft=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["articulos", "delete", "{{articuloId}}"],
+              "query": [
+                {
+                  "key": "idDraft",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
