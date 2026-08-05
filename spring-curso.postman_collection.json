@@ -1,0 +1,172 @@
+{
+  "info": {
+    "name": "spring-curso API",
+    "description": "Colección generada automáticamente a partir de los controladores del proyecto (BasicController, ArticuloController, UsuarioController).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "b8f1a6b0-3f6d-4e2a-9d0b-spring-curso-0001"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "usuarioId",
+      "value": "",
+      "type": "string",
+      "description": "UUID de un usuario existente"
+    },
+    {
+      "key": "articuloId",
+      "value": "",
+      "type": "string",
+      "description": "UUID de un artículo existente"
+    }
+  ],
+  "item": [
+    {
+      "name": "BasicController",
+      "item": [
+        {
+          "name": "Hello",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/hello",
+              "host": ["{{baseUrl}}"],
+              "path": ["hello"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bye",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bye",
+              "host": ["{{baseUrl}}"],
+              "path": ["bye"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ArticuloController",
+      "item": [
+        {
+          "name": "Crear Articulo",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Mi primer articulo\",\n  \"contenido\": \"Contenido del articulo de ejemplo\",\n  \"idUsuario\": \"{{usuarioId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/articulos/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["articulos", "save"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar Articulo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Titulo actualizado\",\n  \"contenido\": \"Contenido actualizado\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/articulos/update/{{articuloId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["articulos", "update", "{{articuloId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "UsuarioController",
+      "item": [
+        {
+          "name": "Crear Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"jperez\",\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Perez\",\n  \"dni\": \"12345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/save",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", "save"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Usuario por Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/{{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", "{{usuarioId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Agregar Role a Usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/usuario/role?role=ADMIN&usuarioId={{usuarioId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["usuarios", "usuario", "role"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "ADMIN"
+                },
+                {
+                  "key": "usuarioId",
+                  "value": "{{usuarioId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
