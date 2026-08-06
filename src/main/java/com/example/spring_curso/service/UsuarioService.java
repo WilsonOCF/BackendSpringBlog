@@ -1,35 +1,51 @@
 package com.example.spring_curso.service;
 
 import com.example.spring_curso.dto.input.UsuarioCreateDto;
+import com.example.spring_curso.dto.output.ReniecResponseApi;
 import com.example.spring_curso.dto.output.UsuarioResponse;
 import com.example.spring_curso.entity.RoleEntity;
 import com.example.spring_curso.entity.UsuarioEntity;
+import com.example.spring_curso.feign.ReniecClient;
 import com.example.spring_curso.repository.RoleRepository;
 import com.example.spring_curso.repository.UsuarioRepository;
 import com.example.spring_curso.service.utils.Mapper;
 import com.example.spring_curso.service.utils.PasswordGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.Role;
 import java.rmi.MarshalledObject;
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final RoleRepository roleRepository;
+    private final ReniecClient reniecClient;
+    @Value("${decolecta.api.token}")
+    private String token;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository, ReniecClient reniecClient) {
         this.usuarioRepository = usuarioRepository;
         this.roleRepository = roleRepository;
+        this.reniecClient = reniecClient;
     }
 
-    public UsuarioResponse createUsuario(UsuarioCreateDto usuarioCreateDto){
-        String dni = usuarioCreateDto.getDni();
+    public UsuarioResponse createUsuario(String dni){
+        ReniecResponseApi reniecResponse = null;
+        try {
+            reniecResponse
+                    = reniecClient.getInfoPersonal(dni, "Bearer " + token);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
         String password = PasswordGenerator.generatePassword(
                 10,true,true,true,true
         );
-        UsuarioEntity usuarioEntity = Mapper.fromUsuarioCreateDto(usuarioCreateDto);
+        UsuarioEntity usuarioEntity = Mapper.fromUsuarioCreateDto(reniecResponse);
         usuarioEntity.setPassword(password);
 
         usuarioRepository.save(usuarioEntity);

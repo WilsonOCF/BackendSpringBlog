@@ -3,6 +3,7 @@ package com.example.spring_curso.service.utils;
 import com.example.spring_curso.dto.input.ArticuloCreateDto;
 import com.example.spring_curso.dto.input.UsuarioCreateDto;
 import com.example.spring_curso.dto.output.ArticuloCreateResponse;
+import com.example.spring_curso.dto.output.ReniecResponseApi;
 import com.example.spring_curso.dto.output.UsuarioResponse;
 import com.example.spring_curso.entity.ArticuloEntity;
 import com.example.spring_curso.entity.RoleEntity;
@@ -36,12 +37,12 @@ public class Mapper {
     //---------------------
     //  Segundo Mapper
     //--------------------
-    public static UsuarioEntity fromUsuarioCreateDto(UsuarioCreateDto usuarioCreateDto){
+    public static UsuarioEntity fromUsuarioCreateDto(ReniecResponseApi reniecResponseApi){
         UsuarioEntity usuarioEntity = new UsuarioEntity();
-        usuarioEntity.setUsername(usuarioCreateDto.getUsername());
-        usuarioEntity.setNombre(usuarioCreateDto.getNombre());
-        usuarioEntity.setApellido(usuarioCreateDto.getApellido());
-        usuarioEntity.setDni(usuarioCreateDto.getDni());
+        usuarioEntity.setUsername(reniecResponseApi.getDocumentNumber());
+        usuarioEntity.setNombre(reniecResponseApi.getFirstName());
+        usuarioEntity.setApellido(reniecResponseApi.getFirstLastName());
+        usuarioEntity.setDni(reniecResponseApi.getDocumentNumber());
         return usuarioEntity;
     }
 
